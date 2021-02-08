@@ -15,6 +15,7 @@
     <description>SSM Hello World example</description>
     <properties>
         <java.version>11</java.version>
+        <ssm.version>2.4.0</ssm.version>
     </properties>
     <dependencies>
         <dependency>
@@ -23,10 +24,24 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework.statemachine</groupId>
+            <artifactId>spring-statemachine-starter</artifactId>
+            <version>${ssm.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.statemachine</groupId>
+            <artifactId>spring-statemachine-test</artifactId>
+            <version>${ssm.version}</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>

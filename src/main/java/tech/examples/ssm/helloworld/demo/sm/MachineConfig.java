@@ -1,6 +1,8 @@
 package tech.examples.ssm.helloworld.demo.sm;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.statemachine.action.Action;
 import org.springframework.statemachine.config.EnableStateMachine;
 import org.springframework.statemachine.config.EnumStateMachineConfigurerAdapter;
 import org.springframework.statemachine.config.builders.StateMachineConfigurationConfigurer;
@@ -13,6 +15,20 @@ import java.util.EnumSet;
 @EnableStateMachine
 public class MachineConfig
         extends EnumStateMachineConfigurerAdapter<DomainState, DomainEvent> {
+
+    public static final String DEFERRED_RESULT_HEADER = "RESULT_HEADER";
+
+    @Autowired
+    private Action<DomainState, DomainEvent> makePaymentAction;
+
+    @Autowired
+    private Action<DomainState, DomainEvent> goTroughAction;
+
+    @Autowired
+    private Action<DomainState, DomainEvent> beMoreGenerousAction;
+
+    @Autowired
+    private Action<DomainState, DomainEvent> youShallNotPassAction;
 
     @Override
     public void configure(StateMachineConfigurationConfigurer<DomainState, DomainEvent> config) throws Exception {
@@ -32,9 +48,21 @@ public class MachineConfig
                 .withExternal()
                 .source(DomainState.LOCKED).target(DomainState.UNLOCKED)
                 .event(DomainEvent.COIN)
+                .action(makePaymentAction)
                 .and()
                 .withExternal()
                 .source(DomainState.UNLOCKED).target(DomainState.LOCKED)
-                .event(DomainEvent.PUSH);
+                .event(DomainEvent.PUSH)
+                .action(goTroughAction)
+                .and()
+                .withExternal()
+                .source(DomainState.UNLOCKED).target(DomainState.UNLOCKED)
+                .event(DomainEvent.COIN)
+                .action(beMoreGenerousAction)
+                .and()
+                .withExternal()
+                .source(DomainState.LOCKED).target(DomainState.LOCKED)
+                .event(DomainEvent.PUSH)
+                .action(youShallNotPassAction);
     }
 }

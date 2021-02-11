@@ -15,7 +15,8 @@ public class MakePaymentAction implements Action<DomainState, DomainEvent> {
     @Override
     public void execute(StateContext<DomainState, DomainEvent> context) {
 
-        System.out.println("Money money money");
+        String userId = (String) context.getMessage().getHeaders().get(MachineConfig.USER_ID_HEADER);
+        System.out.println("Hi " + userId + "! Money money money");
 
         DeferredResult<ResponseEntity<DomainState>> result = (DeferredResult<ResponseEntity<DomainState>>) context
                 .getMessage().getHeaders().get(MachineConfig.DEFERRED_RESULT_HEADER);

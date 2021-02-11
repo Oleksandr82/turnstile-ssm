@@ -6,19 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.statemachine.StateMachine;
+import org.springframework.statemachine.config.StateMachineFactory;
 import org.springframework.statemachine.test.StateMachineTestPlan;
 import org.springframework.statemachine.test.StateMachineTestPlanBuilder;
-import org.springframework.test.context.ContextConfiguration;
 import tech.examples.ssm.helloworld.demo.sm.actions.BeMoreGenerousAction;
 import tech.examples.ssm.helloworld.demo.sm.actions.YouShallNotPassAction;
 import tech.examples.ssm.helloworld.demo.sm.actions.GoTroughAction;
 import tech.examples.ssm.helloworld.demo.sm.actions.MakePaymentAction;
 
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 
 @SpringBootTest
-@ContextConfiguration
 class MachineConfigTest {
 
     @MockBean
@@ -34,15 +34,19 @@ class MachineConfigTest {
     BeMoreGenerousAction beMoreGenerousAction;
 
     @Autowired
-    StateMachine<DomainState, DomainEvent> machine;
+    StateMachineFactory<DomainState, DomainEvent> machineFactory;
+
+    private StateMachine<DomainState, DomainEvent> machine;
 
     @BeforeEach
     void setUp() {
-        machine.stop();
         doNothing().when(goTroughAction).execute(any());
         doNothing().when(makePaymentAction).execute(any());
         doNothing().when(beMoreGenerousAction).execute(any());
         doNothing().when(youShallNotPassAction).execute(any());
+
+        machine = machineFactory.getStateMachine();
+        machine.stop();
     }
 
     @Test

@@ -3,7 +3,7 @@ package tech.examples.ssm.helloworld.demo.sm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.statemachine.action.Action;
-import org.springframework.statemachine.config.EnableStateMachine;
+import org.springframework.statemachine.config.EnableStateMachineFactory;
 import org.springframework.statemachine.config.EnumStateMachineConfigurerAdapter;
 import org.springframework.statemachine.config.builders.StateMachineConfigurationConfigurer;
 import org.springframework.statemachine.config.builders.StateMachineStateConfigurer;
@@ -12,11 +12,12 @@ import org.springframework.statemachine.config.builders.StateMachineTransitionCo
 import java.util.EnumSet;
 
 @Configuration
-@EnableStateMachine
+@EnableStateMachineFactory
 public class MachineConfig
         extends EnumStateMachineConfigurerAdapter<DomainState, DomainEvent> {
 
     public static final String DEFERRED_RESULT_HEADER = "RESULT_HEADER";
+    public static final String USER_ID_HEADER = "USER_ID_HEADER";
 
     @Autowired
     private Action<DomainState, DomainEvent> makePaymentAction;

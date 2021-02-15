@@ -1,6 +1,6 @@
 package tech.examples.ssm.helloworld.demo.sm;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.statemachine.action.Action;
 import org.springframework.statemachine.config.EnableStateMachineFactory;
@@ -8,32 +8,30 @@ import org.springframework.statemachine.config.EnumStateMachineConfigurerAdapter
 import org.springframework.statemachine.config.builders.StateMachineConfigurationConfigurer;
 import org.springframework.statemachine.config.builders.StateMachineStateConfigurer;
 import org.springframework.statemachine.config.builders.StateMachineTransitionConfigurer;
+import org.springframework.statemachine.persist.StateMachineRuntimePersister;
 
 import java.util.EnumSet;
 
 @Configuration
 @EnableStateMachineFactory
+@RequiredArgsConstructor
 public class MachineConfig
         extends EnumStateMachineConfigurerAdapter<DomainState, DomainEvent> {
 
     public static final String DEFERRED_RESULT_HEADER = "RESULT_HEADER";
     public static final String USER_ID_HEADER = "USER_ID_HEADER";
 
-    @Autowired
-    private Action<DomainState, DomainEvent> makePaymentAction;
+    private final Action<DomainState, DomainEvent> makePaymentAction;
+    private final Action<DomainState, DomainEvent> goTroughAction;
+    private final Action<DomainState, DomainEvent> beMoreGenerousAction;
+    private final Action<DomainState, DomainEvent> youShallNotPassAction;
 
-    @Autowired
-    private Action<DomainState, DomainEvent> goTroughAction;
-
-    @Autowired
-    private Action<DomainState, DomainEvent> beMoreGenerousAction;
-
-    @Autowired
-    private Action<DomainState, DomainEvent> youShallNotPassAction;
+    private final StateMachineRuntimePersister<DomainState, DomainEvent, String> stateMachineRuntimePersister;
 
     @Override
     public void configure(StateMachineConfigurationConfigurer<DomainState, DomainEvent> config) throws Exception {
         config.withConfiguration().autoStartup(true);
+        config.withPersistence().runtimePersister(stateMachineRuntimePersister);
     }
 
     @Override

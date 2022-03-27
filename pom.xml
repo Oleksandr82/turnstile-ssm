@@ -15,7 +15,7 @@
     <description>SSM Hello World example</description>
     <properties>
         <java.version>11</java.version>
-        <ssm.version>2.4.0</ssm.version>
+        <ssm.version>2.5.0</ssm.version>
     </properties>
     <dependencies>
         <dependency>

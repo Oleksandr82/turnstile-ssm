@@ -45,7 +45,7 @@ class MachineConfigTest {
         doNothing().when(beMoreGenerousAction).execute(any());
         doNothing().when(youShallNotPassAction).execute(any());
 
-        machine = machineFactory.getStateMachine();
+        machine = machineFactory.getStateMachine("test");
         machine.stop();
     }
 

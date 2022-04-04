@@ -1,6 +1,5 @@
 package tech.examples.ssm.helloworld.demo.sm;
 
-import org.junit.Ignore;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +10,6 @@ import org.springframework.statemachine.StateMachine;
 import org.springframework.statemachine.config.StateMachineFactory;
 import org.springframework.statemachine.test.StateMachineTestPlan;
 import org.springframework.statemachine.test.StateMachineTestPlanBuilder;
-import org.springframework.test.context.ContextConfiguration;
 import tech.examples.ssm.helloworld.demo.sm.action.BeMoreGenerousAction;
 import tech.examples.ssm.helloworld.demo.sm.action.GoTroughAction;
 import tech.examples.ssm.helloworld.demo.sm.action.MakePaymentAction;
